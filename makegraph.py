@@ -58,7 +58,8 @@ def makeplot(data,
     ax.set_xlabel(xlab,
                   size=fs)
     # Y axis label
-    ax.yaxis.label.set_size(fs)
+    ax.set_ylabel(ylab,
+		  size=fs)   
     # legend
     box = ax.get_position()
     ax.set_position([box.x0, box.y0 + box.height * 0.2,
