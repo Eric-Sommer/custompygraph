@@ -32,3 +32,4 @@ The legend is put below the plot area instead of within, mimicking Stata style.
 
 * allow further plot types
 * allow an indefinite number of plots
+* allow subplots
