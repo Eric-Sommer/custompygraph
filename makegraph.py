@@ -52,25 +52,32 @@ def makeplot(data,
     # If limits are not given, they are set automatically
     firstkey = list(data.keys())[0]
 
-    if type(data[firstkey][0]).__module__ not in ['numpy', 'pandas.core.series']:
-        raise Exception('Only Numpy array or Panda Series allowed as data input')
+    if not isinstance(data[firstkey][0].min(), (int, float)):
+        raise Exception('Invalid entry data')
+    #type(data[firstkey][0]).__module__ not in ['numpy', 'pandas.core.series']:
+    #   raise Exception('Only Numpy array or Panda Series allowed as data input')
 
     # Optional arguments
     xlim_low = kwargs.get('xlim_low', data[firstkey][0].min() * 1.1)
     xlim_high = kwargs.get('xlim_high', data[firstkey][0].max() * 1.1)
     ylim_low = kwargs.get('ylim_low', data[firstkey][1].min() * 1.1)
     ylim_high = kwargs.get('ylim_high', data[firstkey][1].max() * 1.1)
+    xaxis_grid = kwargs.get('yaxis_grid', False)
+    yaxis_grid = kwargs.get('yaxis_grid', True)
+    subplot = kwargs.get('subplot', False)
+
     lw = kwargs.get('lw', 2)
+    # Switch off vertical grid lines?
+    plt.gca().xaxis.grid(xaxis_grid)
+    plt.gca().yaxis.grid(yaxis_grid)
 
     plt.clf()
     fig = plt.figure(figsize=figs)
     ax = fig.add_subplot(111)
-    # Switch off vertical lines
-    plt.gca().xaxis.grid(False)
+
     ax.tick_params(axis='both',
                    which='major',
                    labelsize=fs-2)
-
 
     # Set limits
     ax.set_ylim(ylim_low, ylim_high)
@@ -90,20 +97,20 @@ def makeplot(data,
     count = 0
     for l, plotdata in data.items():
         if plottype == 'line':
-            ax.plot(plotdata[0],
-                    plotdata[1],
-                    lines[color][count],
-                    c=colors[color][count],
-                    label=l,
-                    linewidth=lw
-                    )
+            ax = ax.plot(plotdata[0],
+                         plotdata[1],
+                         lines[color][count],
+                         c=colors[color][count],
+                         label=l,
+                         linewidth=lw
+                         )
         if plottype == 'scatter':
-            ax.scatter(plotdata[0],
-                       plotdata[1],
-                       marker=markers[color][count],
-                       c=colors[color][count],
-     #                  fillstyle=fillstyles[color],
-                       label=l
+            ax = ax.scatter(plotdata[0],
+                            plotdata[1],
+                            marker=markers[color][count],
+                            c=colors[color][count],
+                            # fillstyle=fillstyles[color],
+                            label=l
                     )
         count += 1
 
@@ -113,4 +120,7 @@ def makeplot(data,
                   bbox_to_anchor=(0.48, -0.15),
                   ncol=2)
     # Return the Plot
-    return plt
+    if subplot:
+        return ax
+    else:
+        return plt
