@@ -14,7 +14,7 @@ def makeplot(data,
              fs=14,
              color='bw',
              showlegend=True,
-             figs=(10, 5),
+             figs=(6*1.618, 6),
              style='seaborn-whitegrid',
              plottype='line',
              **kwargs
