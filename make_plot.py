@@ -59,21 +59,32 @@ def make_plot(data,
     #   raise Exception('Only Numpy array or Panda Series allowed as data input')
 
     # Optional arguments
+    color = kwargs.get('color', 'bw')
     xlim_low = kwargs.get('xlim_low', data[firstkey][0].min() * 1.1)
     xlim_high = kwargs.get('xlim_high', data[firstkey][0].max() * 1.1)
     ylim_low = kwargs.get('ylim_low', data[firstkey][1].min() * 1.1)
     ylim_high = kwargs.get('ylim_high', data[firstkey][1].max() * 1.1)
-    xaxis_grid = kwargs.get('yaxis_grid', True)
-    yaxis_grid = kwargs.get('yaxis_grid', False)
+    xaxis_grid = kwargs.get('xaxis_grid', False)
+    yaxis_grid = kwargs.get('yaxis_grid', True)
+    subplot = kwargs.get('subplot', False)
+    subnum = kwargs.get('subnum')
+
+    # check whether subnum is specified
+    if subplot:
+        assert subnum, "Subplot is True, but no subnum is defined"
 
     lw = kwargs.get('lw', 2)
     # Switch off grid lines?
     plt.gca().xaxis.grid(xaxis_grid)
     plt.gca().yaxis.grid(yaxis_grid)
 
-    plt.clf()
-    fig = plt.figure(figsize=figs)
-    ax = fig.add_subplot(111)
+    # Start plotting
+    if not subplot:
+        plt.clf()
+        fig = plt.figure(figsize=figs)
+        ax = fig.add_subplot(111)
+    if subplot:
+        ax = plt.subplot(subnum)
 
     ax.tick_params(axis='both',
                    which='major',
@@ -128,23 +139,7 @@ def make_plot(data,
                   bbox_to_anchor=(0.48, -0.15),
                   ncol=2)
 
-
-    return fig, ax
-
-def combine_subplots(axlist,
-                     nrows,
-                     ncols,
-                     figs=(5*1.618, 5)
-                     ):
-    # plt.clf()
-    fig2 = plt.figure(figsize=figs)
-
-    for a in axlist:
-        ix = axlist.index(a) + 1
-        print(ix)
-        a = fig2.add_subplot(nrows,
-                            ncols,
-                            ix)
-
-
-    return plt
+    if subplot:
+        return ax
+    if not subplot:
+        return fig
