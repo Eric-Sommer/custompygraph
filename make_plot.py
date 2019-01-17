@@ -53,8 +53,8 @@ def make_plot(data,
     # If limits are not given, they are set automatically
     firstkey = list(data.keys())[0]
 
-    if np.isnan(data[firstkey][0]).any() or np.isnan(data[firstkey][1]).any():
-        raise Exception(firstkey + ' contains missing data.')
+    if np.isnan(data[firstkey][0]).all() or np.isnan(data[firstkey][1]).all():
+        print(firstkey + ' contains an all missing vector.')
     if not isinstance(data[firstkey][0].min(), (int, float)):
         raise Exception('Invalid entry data')
     #type(data[firstkey][0]).__module__ not in ['numpy', 'pandas.core.series']:
