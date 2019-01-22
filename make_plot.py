@@ -130,7 +130,7 @@ def make_plot(data,
                        plotdata[1],
                        marker=markers[color][count],
                        c=colors[color][count],
-                       # fillstyle=fillstyles[color],
+                       fillstyle=fillstyles[color],
                        label=l
                     )
         count += 1
