@@ -67,7 +67,3 @@ fig.show()
 ## Future extensions
 
 * allow an indefinite number of plots
-
-## Bugs to fix
-
-* grid settings don't work correctly when doing subplots
