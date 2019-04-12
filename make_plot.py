@@ -78,6 +78,7 @@ def make_plot(
     yaxis_grid = kwargs.get("yaxis_grid", True)
     subplot = kwargs.get("subplot", False)
     subnum = kwargs.get("subnum")
+    hline = kwargs.get("hline", ())
 
     # check whether subnum is specified
     if subplot:
@@ -149,6 +150,10 @@ def make_plot(
                 label=l,
             )
         count += 1
+
+    for yval in hline:
+        ax.axhline(y=yval,
+                   color='black')
 
     if showlegend:
         ax.legend(
