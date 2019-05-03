@@ -25,11 +25,11 @@ def make_plot(
     """
     Wrapper for matplotlib plots, avoiding the hassle of specifying the look each and every time
 
-	data is a dictionary, where each entry contains the label, and the x and y data as a list.
+    data is a dictionary, where each entry contains the label, and the x and y data as a list.
 
-	Example:
+    Example:
     data = {'label1': [x1data, y1data]
-			'label2': [x2data, y2data]}
+            'label2': [x2data, y2data]}
     """
 
     # plt.style.use(style)
@@ -59,7 +59,7 @@ def make_plot(
     # If limits are not given, they are set automatically
     firstkey = list(data.keys())[0]
 
-    if not plottype in ['scatter', 'line']:
+    if plottype not in ['scatter', 'line']:
         raise Exception("Invalid plottype")
     if np.isnan(data[firstkey][0]).all() or np.isnan(data[firstkey][1]).all():
         print(firstkey + " contains an all missing vector.")
